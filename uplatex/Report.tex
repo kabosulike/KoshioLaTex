@@ -1,0 +1,481 @@
+%% -*- coding: utf-8 -*-
+\RequirePackage{etex,plautopatch}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%   必  ず  読  ん  で  く  だ  さ  い  ！   %%%%%%%%%%%%%%%%%%
+%
+% 数理新人セミナーのテンプレートです．以下のように使用してください．
+% 
+% 1. 使用する TeX ディストリビューションは TeX Live を推奨します．
+%
+% 2. PDF ファイルとTeXファイルをメールにて提出していただきます．ご提出の際，ファイル名は姓名を
+%    用いて <FamilynameGivenname>.pdf としてください（アルファベットとドットのみ）．
+%
+%     Example) Suuri Tarou さんの場合：
+%      SuuriTarou.tex
+%      SuuriTarou.pdf
+%
+%    Example) Suuri Hanako さんの場合：
+%      SuuriHanako.zip
+%       └── SuuriHanako
+%            ├──SuuriHanako.tex
+%            ├── SuuriHanako.pdf
+%            ├── my-style-file.sty
+%            ├── my-reference.bib
+%            └── my-figure.pdf
+%
+%    提出先メールアドレスは mathsci_freshman@math.kyoto-u.ac.jp です．
+%
+%%%%%%%%%%%%%%%%%   必  ず  読  ん  で  く  だ  さ  い  ！   %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \documentclass[a4j]{jsarticle}
+\documentclass[a4paper,uplatex,dvipdfmx]{jsarticle}
+%\usepackage[bold]{otf}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{arrows,cd}
+\usepackage[hypertexnames=false]{hyperref}
+\hypersetup{
+    colorlinks=true,
+    citecolor=red,
+    linkcolor=blue,
+    urlcolor=orange
+    }
+\usepackage{cleveref}
+\usepackage{autonum}
+\usepackage{url}
+
+\crefname{enumi}{}{}%
+\crefname{equation}{}{}% {環境名}{単数形}{複数形} \crefで引くときの表示
+\crefname{figure}{図}{図}% {環境名}{単数形}{複数形} \crefで引くときの表示
+\crefname{table}{表}{表}% {環境名}{単数形}{複数形} \crefで引くときの表示
+
+\theoremstyle{definition}
+
+\newtheorem{theorem}{定理}[section]
+\crefname{theorem}{定理}{定理}
+\newtheorem{lemma}[theorem]{補題}
+\crefname{lemma}{補題}{補題}
+\newtheorem{proposition}[theorem]{命題}
+\crefname{proposition}{命題}{命題}
+\newtheorem{corollary}[theorem]{系}
+\crefname{corollary}{系}{系}
+
+
+
+\newtheorem{definition}[theorem]{定義}
+\crefname{definition}{定義}{定義}
+\newtheorem{example}[theorem]{例}
+\crefname{example}{例}{例}
+\newtheorem{remark}[theorem]{c}
+\crefname{remark}{Remark}{Remarks}
+
+\newcommand{\dsmmand}{\mid}
+\newcommand{\setmid}{\; \middle|\;}
+\newcommand{\lmod}{\operatorname{\mathsf{\hspace{-2pt}-mod}}}
+\newcommand{\lMod}{\operatorname{\mathsf{\hspace{-2pt}-Mod}}}
+\newcommand{\lproj}{\operatorname{\mathsf{\hspace{-2pt}-proj}}}
+\newcommand{\linj}{\operatorname{\mathsf{\hspace{-2pt}-inj}}}
+\newcommand{\thick}{\operatorname{\mathsf{thick}}}
+\newcommand{\silt}{\operatorname{\mathsf{silt}}}
+\newcommand{\opo}{\operatorname{\mathrm{op}}}
+\newcommand{\twosilt}{\operatorname{\mathsf{2-silt}}}
+\newcommand{\twotilt}{\operatorname{\mathsf{2-tilt}}}
+
+
+\newcommand{\Image}{\operatorname{\mathrm{Im}}}
+\newcommand{\Soc}{{\operatorname{Soc}\nolimits}}
+\newcommand{\Rad}{{\operatorname{Rad}\nolimits}}
+\newcommand{\Ext}{\operatorname{Ext}\nolimits}
+\newcommand{\End}{\operatorname{End}\nolimits}
+\newcommand{\Hom}{\operatorname{Hom}\nolimits}
+\newcommand{\induc}{{\operatorname{Ind}\nolimits}}
+\newcommand{\restr}{{\operatorname{Res}\nolimits}}
+\newcommand{\add}{\operatorname{\mathsf{add}}}
+\newcommand{\stautilt}{\operatorname{\mathsf{s\tau-tilt}}}
+\newcommand{\stauitilt}{\operatorname{\mathsf{s\tau^{-1}-tilt}}}
+\newcommand{\nscf}{\operatorname{\mathsf{s}}}
+
+
+
+\newcommand{\tors}{\operatorname{\mathsf{tors}}}
+\newcommand{\torf}{\operatorname{\mathsf{torf}}}
+\newcommand{\ftors}{\operatorname{\mathsf{f-tors}}}
+\newcommand{\ftorf}{\operatorname{\mathsf{f-torf}}}
+\newcommand{\Fac}{\operatorname{\mathsf{Fac}}}
+\newcommand{\Sub}{\operatorname{\mathsf{Sub}}}
+\newcommand{\Filt}{\operatorname{\mathsf{Filt}}}
+\newcommand{\brick}{\operatorname{\mathsf{brick}}}
+\newcommand{\sbrick}{\operatorname{\mathsf{sbrick}}}
+\newcommand{\flsbrick}{\operatorname{\mathsf{f_L-sbrick}}}
+\newcommand{\frsbrick}{\operatorname{\mathsf{f_R-sbrick}}}
+\newcommand{\smc}{\operatorname{\mathsf{smc}}}
+\newcommand{\twosmc}{\operatorname{\mathsf{2-smc}}}
+\newcommand{\torscl}{\mathsf{T}}
+\newcommand{\torfcl}{\mathsf{F}}
+\newcommand{\til}[1]{{\widetilde{#1}}}
+\newcommand{\inertiagp}{I}
+\newcommand{\decompgp}{I}
+
+
+%% 以下を適宜書き換えてください. (Japanese version)
+\title{% 
+有限群のモジュラー表現論と\texorpdfstring{\(\tau\)}{τ}傾理論%
+%% ↑ 講演タイトルを記入
+}
+\author{%
+小塩遼太郎%
+\footnote{%
+E-mail:\href{mailto:1120702@ed.tus.ac.jp}{1120702@ed.tus.ac.jp}
+% 1120702@ed.tus.ac.jp%
+}}
+\date{%
+東京理科大学理学研究科数学専攻博士課程一年%
+%% ↑ 2019年2月時点での所属を記入
+，2021年2月10日%
+}
+
+
+%%% Please fill out the following. (English version). 
+%\title{% 
+%title\\%
+%%%  (your talk title)
+%}
+%\author{%
+%name%
+%\footnote{%
+%email@address%
+%}}
+%\date{%
+%affiliation%
+%%% (your affiliation as of February 2019)
+%February 2021%
+%}
+
+\begin{document}
+% \pagestyle{empty}
+\maketitle
+\tableofcontents
+
+\section{はじめに}
+本稿では、古くより精力的に研究されてきた「有限群のモジュラー表現論」と近年盛んに研究されている「\(\tau\)傾理論」を組み合わせることで得られた結果について紹介する。
+本稿および第4回数理新人セミナーの講演における主結果は東京理科大学の小境雄太氏との共同研究に基づくものである。
+\subsection{有限群のブロックと導来同値}
+有限群\(G\)の標数\(p>0\)をもつ体\(k\)上の線形表現を考えることは、群多元環\(kG:=\left\{ \sum_{g \in G} a_g g \setmid a_g \in k \right\}\)上の加群を考えることと等価である。
+モジュラー表現について考えているため、素数\(p\)は有限群\(G\)の位数\(\# G\)を割っていることを想定している。
+また、議論が煩雑になることを避けるために、体\(k\)は代数閉体とする。
+群多元環\(kG\)の多元環としての直既約直積分解
+\(kG=\cdots \times B \times \cdots\)
+をブロック分解といい、その直既約直積因子\(B\)をブロックという。
+群多元環\(kG\)のブロック分解にともない、加群圏の直積分解
+\(kG\lmod=\cdots \times B\lmod \times \cdots\)
+が得られる。
+この意味で、有限群のモジュラー表現論は各々のブロックの表現論に帰着される。
+なかでも、有限群のブロックの導来同値に関する研究は、有限群のモジュラー表現論における局所大域化原理の定式化と言える「Brou\'{e}予想」によって動機づけられ、大きく発展してきた。
+\cite{MR1002456}において導入された傾複体(tilting complex)は、森田理論における射影生成子(progenerator)と類似した役割を担う複体である。
+% 有限群のブロックは、ほとんどの場合に大域次元が無限となるため、大域次元が有限である多元環においてよく振る舞う傾加群(tilting module)は自明なものしか存在しない。
+% 傾複体は傾加群の導来圏における対応物であり、
+実際に、ブロックの導来同値に関する研究は適切な傾複体を見つけることに帰着される。
+しかし、傾複体は森田理論における射影生成子よりも圧倒的に多く、適切な傾複体を構成することも容易ではない。
+このことから、ブロック上の傾複体を豊富に構成すること、及びその分類を完遂させることはブロックの導来同値に関する研究に対して有意義である。
+\subsection{二項傾複体と台\texorpdfstring{\(\tau\)}{τ}傾加群}
+ブロック\(B\)上の自明な傾複体として、\(B\)自身を複体と見たものがとれる。
+二項傾複体(two-term tilting complex)は非自明な傾複体のうち、最も扱いやすい形をした傾複体といえる。
+単純加群の集合を指定することで構成され、具体的な群のブロックの導来同値の検証において有効に利用されたOkuyama--Rickard傾複体は全て二項傾複体である\cite{okuyama1997some}。
+加えて、\cite{MR2927802}において導入された傾変異(tilting mutation)を用いることで、二項傾複体から一般の傾複体を構成できる。
+このことから、二項傾複体に限定した議論は十分に有用である。
+
+% \cite{MR860771}
+\cite{MR3187626}において導入され、さまざまな表現論的な対象と対応することが示された台\(\tau\)傾加群(support \(\tau\)-tilting module)は\(\tau\)傾理論(\(\tau\)-tilting theory)において中心的な役割を担う加群である。
+とくに台\(\tau\)傾加群が二項傾複体や半単純加群の一般化である半煉瓦（semibrick）と対応することは注目に値する。
+傾複体に対する傾変異と同様に、与えられた台\(\tau\)傾加群から新たな台\(\tau\)傾加群を構成する手法である\(\tau\)傾変異（\(\tau\)-tilting mutation）が定義される。
+そして、上述の二項傾複体と台\(\tau\)傾加群の間の対応が、各々の変異に対して整合的であることが\cite{MR3187626}において示された。
+この意味で、
+台\(\tau\)傾加群は導来圏における対象である二項傾複体を加群圏の中で実現したものであると言える。
+% 台\(\tau\)傾加群は二項傾複体との間に対応がつくため
+\subsection{ブロック上の台\texorpdfstring{\(\tau\)}{τ}傾加群に対する先行研究}
+有限次元多元環の表現論は、究極的にはその多元環上の直既約加群の様子が全て分かればよい。
+それがどの程度難しいかを測る概念が多元環の表現型（representation type）である。表現型は排反な以下の三通りに分けられる\cite{10.1007/BFb0088467}。
+\begin{description}[style=nextline]
+  \item[有限型（finite type）] 直既約加群の同型類が有限個である
+  \item[従順的（tame type）] 直既約加群の同型類が無限個存在するが、パラメトライズによって全てを記述できる
+  \item[野生的（wild type）] 直既約加群の同型類が無限個存在するのみならず、その全てを記述しようという試みは絶望的である
+\end{description}
+有限群のブロックの表現型は、そのブロックに割り当てられる不足群（defect group）によって判定が可能である\cite{MR0472984,MR1064107}。この事実によると、実は大半のブロックの表現型が野生的になってしまう。
+そのため、ブロックを単に多元環として捉えてその上の台\(\tau\)傾加群について分析することは困難である。
+一方で、表現型が有限型である場合と従順型である場合のブロック上の台\(\tau\)傾加群については、\cite{MR3461065,aoki2018torsion,MR3848421,MR4057513}などの多元環の表現論的な視座からの先行研究がある。
+本稿では、表現型が野生的となるブロック上の台\(\tau\)傾加群や半煉瓦の計算を有限群のモジュラー表現論的な手法を用いて先行研究に帰着させる結果について紹介する。
+\section{準備}
+本稿では、有限群のブロックについての考察を目標としているため、一般の有限次元多元環についても成立する\(\tau\)傾理論に関する考察は対称多元環に限定して行う。一般の対象多元環は\(B\)で表わすこととする。加群は全て有限生成左加群を表わすものとし、加群と準同型からなる複体は全て余鎖複体を表わすものとする。\(B\)加群全体の成す圏を\(B\lmod\)、\(B\)上の射影加群からなる有界な複体の成すホモトピー圏を\(K^b(B\lproj)\)、\(B\)加群からなる有界な複体の成す導来圏を\(D^b(B\lmod)\)と表わす。
+台\(\tau\)傾加群の定義に使用されるAuslander--Reiten移動を\(\tau\)で表わす。対称多元環に限定した議論となるため、\(B\)加群\(U\)に対して\(\tau U\cong \Omega \Omega U\)が成り立つ。ただし、\(\Omega U\)は\(U\)の射影被覆\(P U\)により定まる次の完全系列によって定義される。
+\begin{equation}
+  \begin{tikzcd}
+    0\ar[r]&\Omega U \ar[r]&P U\ar[r]&U\ar[r]&0.
+  \end{tikzcd}
+\end{equation}
+加群もしくは複体\(U\)に対して、\(\add U\)で\(U\)の有限直和とそれらの直既約因子全体からなる集合とする。また、加群\(U\)に対して\(Fac U\)で\(\add U\)に属する加群からの全射が存在するような加群全体の成す集合とする。
+% \subsection{傾複体}
+
+\subsection{\texorpdfstring{\(\tau\)}{τ}傾理論}
+2つの対称多元環\(B,B'\)に対して、各々の有界導来圏\(D^b(B\lmod), D^b(B'\lmod)\)が三角圏として同値となるとき、\(B\)と\(B'\)は導来同値であるという。多元環の導来同値と適切な条件を満たす傾複体の存在は必要十分である。
+\begin{definition}
+  対称多元環\(B\)上の射影加群からなる有界複体\(T\)が以下の条件を満たすとき、\(T\)を傾複体という。
+  \begin{enumerate}
+    \item \(0\)でない任意の整数\(n\)に対して、\(\Hom_{K^b(\lproj)}(T,T[n])=0\)が成り立つ。
+    \item \(T\)を含み、直和因子をとる操作で閉じる\(K^b(B\lproj)\)の最小の三角部分圏が\(K^b(B\lproj)\)と一致する。
+  \end{enumerate}
+\end{definition}
+\begin{theorem}[{\cite{MR1002456}}]\label{Ric Derived eq}
+  以下の２条件は同値である。
+  \begin{enumerate}
+    \item \(B\)と\(B'\)が導来同値である。
+    \item 多元環としての同型\(\End_{K^b(B\lproj}(T)^{\opo} \cong B'\)を満たすような\(B\)上の傾複体\(T\)が存在する。
+  \end{enumerate}
+\end{theorem}
+与えられた傾複体に対して、その直既約直和因子を1つ取り替えることで新たな傾複体を構成する手法である傾変異は有用である。本稿では、特に左既約傾変異のみ使用する。以下にその定義を述べる。
+\begin{definition}
+  対称多元環\(B\)上の傾複体\(T\)が直既約直和因子\(X\)によって
+  \begin{equation}
+    T\cong X\oplus Y
+  \end{equation}
+  と表されているとする。このとき、有界ホモトピー圏\(K^b(B\lproj)\)における完全三角
+  \begin{equation}
+    \begin{tikzcd}
+      X\ar[r,"f"]&Y'\ar[r]&Z\ar[r]&X[1]
+    \end{tikzcd}
+  \end{equation}
+  であって\(f\)が左極小な左\(\add Y\)近似となるようなものをとる。
+  このとき、\(T':=Z\oplus Y\)は再び\(B\)上の傾複体となる。この手順によって得られた\(B\)上の新たな傾複体\(T'\)を\(T\)の\(X\)による左既約傾変異という。
+\end{definition}
+
+対称多元環\(B\)上の傾複体\(T\)が\(-1,0\)次の項をのぞいて全て\(0\)であるとき、\(T\)を二項傾複体という。二項傾複体は非自明な傾複体のうち最も扱いやすい形であるのみならず、以下に述べられる台\(\tau\)傾加群と変異も込めて対応し、加群圏の議論に落とし込むことができる。
+\begin{definition}[{\cite{MR3187626}}]
+  \(B\)上の加群\(U\)が以下の条件を満たすとき、\(U\)を台\(\tau\)傾加群という。
+  \begin{itemize}
+    \item \(\Hom_B(U,\tau U)=0\)が成り立つ。
+    \item \(U\)の直既約直和因子の同型類の個数が\(U\)の蘇生因子として現れる単純加群の同型類の個数と一致する。
+  \end{itemize}
+\end{definition}
+\begin{example}
+  対称多元環\(B\)に対して、自明な台\(\tau\)傾加群として、正則加群\({}_BB\)と零加群\(0\)が取れる。もし、\(B\)が単純多元環や局所多元環などの単純加群を1種類しか持たないときは、台\(\tau\)傾加群は自明なものしか存在しない。
+\end{example}
+\begin{definition}[{\cite{MR3187626}}]
+  対称多元環\(B\)上の台\(\tau\)傾加群\(U\)がその直既約直和因子\(X\)によって
+  \begin{equation}
+    U\cong X\oplus Y
+  \end{equation}
+  と表されているとする。加えて、\(X \notin \Fac Y\)が成り立っているとき、加群圏\(B\lmod\)における完全系列
+  \begin{equation}
+    \begin{tikzcd}
+      X\ar[r,"f"]&Y'\ar[r]&Z\ar[r]\ar[r]&0
+    \end{tikzcd}
+  \end{equation}
+  であって\(f\)が左極小な左\(\add Y\)近似となるようにとる。このとき、\(Z\oplus Y\)は再び台\(\tau\)傾加群となる。この手順によって得られた\(B\)上の新たな台\(\tau\)傾加群を\(U\)の\(X\)による左\(\tau\)傾変異という。
+\end{definition}
+二項傾複体と台\(\tau\)傾加群の関係性を述べるために必要となる集合を定義する。２つの傾複体\(T, T'\)に対して、\(\add T=\add T'\)が成り立つときに\(T\sim T'\)と表わすと、この関係は同値関係となる。この同値関係で同値となっている\(T\)と\(T'\)は各々の自己準同型環が森田同値になっていることに注意する。同値関係\(\sim\)で\(B\)上の二項傾複体全体の成す集合を割って得られる集合を\(\twotilt B\)と表わす\footnote{\cref{Ric Derived eq}において同じ役割を果たす二項傾複体を同一視するものである。}この同値関係における完全代表系として基本的(basic)\footnote{傾複体を直既約直話分解したときに、全ての直既約直和因子が重複度1で現れるということである。}な二項傾複体がとれる。同様に、2つの台\(\tau\)傾加群\(U, U'\)に対して、\(\add U=\add U'\)が成り立つときに\(U\thickapprox U'\)と表わすと、この関係は同値関係となる。この同値関係\(\thickapprox\)で\(B\)上の台\(\tau\)傾加群を割って得られる集合を\(\stautilt B\)と表わす。
+\begin{theorem}[{\cite{MR3187626}}]
+  集合\(\twotilt B\)から\(\stautilt B\)への写像
+  \begin{equation}
+    \begin{tikzcd}
+      \twotilt B\ar[r]&\stautilt B
+    \end{tikzcd}
+  \end{equation}
+  が\(\twotilt \ni T \mapsto H^0(T)\footnote{\(H^0(T)\)は傾複体\(Tの0次のコホモロジーのことである。\)}\in \stautilt B\)によって定義され、この写像は全単射である。加えて、この全単射は左既約傾変異の関係にある２つの二項傾複体を左\(\tau\)傾変異の関係にある台\(\tau\)傾加群へと写す。
+\end{theorem}
+台\(\tau\)傾加群は二項傾複体と対応するのみならず、半煉瓦（semibrick）とも対応することが\cite{MR4139031}において示された。半煉瓦及び煉瓦(brick)は、単純加群に対する「Schurの補題」に着目した、半単純加群(semisimple module)及び単純加群(simple module)の一般化である。
+\begin{definition}
+  \(B\)加群\(S\)に対して
+  \begin{itemize}
+    \item \(S\)が煉瓦であるとは\(\End_B(S)\cong k\)成り立つことをいう。
+    \item \(S\)が半煉瓦であるとは、\(S\)が以下の条件を満たす煉瓦\(S_i\)の有限直話となっていることをいう。
+          \begin{align}
+            \Hom_B(S_i,S_j)=0 & \quad (S_i\ncong S_j).
+          \end{align}
+  \end{itemize}
+\end{definition}
+２つの半煉瓦\(S, S'\)に対して、\(\add S=\add S'\)が成り立つときに\(S\approx S'\)と表わすと、この関係は同値関係となる。この同値関係で\(B\)上の半煉瓦全体のなす集合を割って得られる集合を\(\sbrick B\)と表わす。
+\begin{theorem}[{\cite{MR4139031}}]
+  \(B\)上の台\(\tau\)傾加群\(U\)に対して、\(U\)の自己準同型\(k\)多元環\(\End_B(U)\)上の加群としてのJacobson根基を\(R_U\)と表わす。写像
+  \begin{equation}\label{asai corr 2021-06-30 19:20:26}
+    \begin{tikzcd}
+      \stautilt B\ar[r]&\sbrick B
+    \end{tikzcd}
+  \end{equation}
+  を\(\stautilt B\ni U\mapsto U/R_U\in\sbrick B\)と定義できる。写像\cref{asai corr 2021-06-30 19:20:26}は単射である\footnote{左有限な半煉瓦全体からえられる\(\sbrick B\)の部分集合を\cref{asai corr 2021-06-30 19:20:26}の終域とすることで全単射にすることが可能である。本稿では左有限性についての議論を省略する。}。
+\end{theorem}
+\subsection{有限群のモジュラー表現論}
+体\(k\)を標数\(p>0\)をもつ代数閉体\(k\)とする。群\(G\)を正規部分群として含む有限群\(\widetilde{G}\)を考える。
+% \begin{equation}
+%   \begin{tikzcd}
+%     1\ar[r]&G\ar[r]&\widetilde{G}\ar[r]&X\ar[r]&1
+%   \end{tikzcd}
+% \end{equation}
+% を考える。
+% \subsubsection{誘導関手と制限関手}
+\(kG\)加群の圏から\(k\widetilde{G}\)加群の圏への誘導関手
+\begin{equation}
+  \begin{tikzcd}
+    k\widetilde{G}_{kG}\otimes \bullet \colon kG\lmod \ar[r] &k\widetilde{G}\lmod
+  \end{tikzcd}
+\end{equation}
+を\(\induc_G^{\widetilde{G}}\)と表わす。\(k\widetilde{G}\)加群の圏から\(kG\)加群の圏への制限関手
+\begin{equation}
+  \begin{tikzcd}
+    k\widetilde{G}\lmod \ar[r] &kG\lmod
+  \end{tikzcd}
+\end{equation}
+を\(\restr_G^{\widetilde{G}}\)と表わす。\(kG\)加群\(M\)と\(\widetilde{g}\in \widetilde{G}\)に対して、シンボリックな集合\(\widetilde{g}U:=\left\{ \widetilde{g}u \setmid u \in U\right\}\)上の\(G\)の作用を
+\begin{equation}
+  (\widetilde{g}g\widetilde{g}^{-1})\widetilde{g}u:=\widetilde{g}(gu)\quad(g\in G)
+\end{equation}
+によって定める。\(x\in X\)に対して\(\widetilde{g}\in x\)を取り\(xU:=\widetilde{g}U\)と定める。
+以下に述べるMackeyの分解公式は有限群の表現論において重要な役割をもつ。
+\begin{theorem}[正規部分群に対するMackeyの分解公式]
+  有限群の完全系列
+  \begin{equation}
+    \begin{tikzcd}
+      1\ar[r]&G\ar[r]&\widetilde{G}\ar[r]&X\ar[r]&1
+    \end{tikzcd}
+  \end{equation}
+  と\(kG\)加群\(U\)に対して以下の\(kG\)加群としての同型が成り立つ。
+  \begin{equation}
+    \restr_G^{\widetilde{G}}\induc_G^{\widetilde{G}}U\cong \bigoplus_{x\in X}xU.
+  \end{equation}
+\end{theorem}
+% \subsubsection{ブロックの被覆}
+群多元環\(kG\)のブロック\(B\)は多元環としての直既約直積因子であった。このため、ブロック\(B\)は群多元環\(kG\)の両側イデアルとなる。有限群\(G\)の部分群\(D\)に対して、\(B\)の積から定まる両側\(B\)準同型
+\begin{equation}
+  \begin{tikzcd}
+    m_D\colon B\otimes_{kD}B\ar[r]&B
+  \end{tikzcd}
+\end{equation}
+が定まる。\(m_D\)が分裂全射であるような位数最小の\(G\)の部分群を\(B\)の不足群（defect group）という。
+不足群はブロックの表現論的な性質を統制する。例えば、以下の性質が成り立つ。
+\begin{proposition}\label{defect prop 2021-07-01 15:26:27}
+  上記の記法のもとで、以下の性質が成り立つ。
+  \begin{enumerate}
+    \item \(D\)は\(p\)部分群である。
+    \item 不足群は\(G\)共役の差をのぞいて一意的に定まる。
+    \item \(D\)が自明な群のとき、ブロック\(B\)は単純多元環となる。\label{trivial defect 2021-07-01 15:34:41}
+    \item \(D\)が非自明な巡回群であることと、\(B\)がBrauer tree多元環であることは同値である。\label{cyclic defect 2021-07-01 15:34:52}
+    \item 体\(k\)の標数が\(2\)であり、\(D\)がクラインの四元群、二面体群、一般二面体群、一般四元数群のいづれかであることと、ブロック\(B\)が無限表現型のBrauer graph多元環となることは同値である。\label{Erd defect 2021-07-01 15:35:07}
+  \end{enumerate}
+\end{proposition}
+本研究の目標は群多元環\(kG\)やそのブロック\(B\)上の\(\tau\)傾理論と群多元環\(k\widetilde{G}\)やそのブロック\(\widetilde{B}\)上の\(\tau\)傾理論を比較する手法について考察するものである。
+各々のブロックの単位元の\(k\widetilde{G}\)における積\(1_B1_{\widetilde{B}}\)が零元でないとき、ブロック\(\widetilde{B}\)がブロック\(B\)を被覆するという。ブロック\(B\)の\(\widetilde{g}\in \widetilde{G}\)共役
+\(\widetilde{g}B\widetilde{g}^{-1}\)も再び群多元環\(kG\)のブロックとなることに注意する。ブロック\(B\)の\(\widetilde{G}\)における惰性群\(\inertiagp_{\widetilde{G}}(B)\)被覆の関係にあるブロックの間の表現論を比較する上で、以下の性質は有用である。
+\begin{proposition}\label{cover prop 2021-07-01 15:26:44}
+  上記の記法のもとで、以下の性質が成り立つ。
+  \begin{enumerate}
+    \item ブロック\(\widetilde{B}\)に被覆される\(kG\)のブロックは全てブロック\(B\)と\(\widetilde{G}\)共役である。
+    \item ブロック\(B\)を被覆する\(k\inertiagp_{\widetilde{G}}(B)\)のブロック全体の成す集合とブロック\(B\)を被覆する\(k\widetilde{G}\)の成す集合の間にはBrauer対応から導かれる全単射が存在する。\label{F.R corr 2021-07-01 14:37:34}
+    \item \cref{F.R corr 2021-07-01 14:37:34}においてブロック\(\widetilde{B}\)と対応する\(k\inertiagp_{\widetilde{G}}(B)\)のブロックを\(\beta\)とすると、\(\beta\)と\(\widetilde{B}\)は森田同値であり、各々の加群圏の間の圏同値が誘導関手\(\induc_{\inertiagp_{\widetilde{G}}(B)}^{\widetilde{G}}\)から導かれる。
+    \item \(X\cong \widetilde{G}/G\)が\(p\)群であるとき、ブロック\(B\)を被覆する\(k\widetilde{G}\)のブロックはただ一つである。\label{p cover 2021-07-04 07:28:55}
+    \item ブロック\(B\)と\(\widetilde{B}\)の各々の不足群\(D\)と\(\widetilde{D}\)を\(D\leq\widetilde{D}\)となるようにとれる。\label{defect inc}
+  \end{enumerate}
+\end{proposition}
+一般に\cref{cover prop 2021-07-01 15:26:44}. \cref{defect inc}. の包含は一致しない。よって、ブロック\(B\)が\cref{defect prop 2021-07-01 15:26:27}. \cref{trivial defect 2021-07-01 15:34:41}. \cref{cyclic defect 2021-07-01 15:34:52}. \cref{Erd defect 2021-07-01 15:35:07}の条件を満たしたとしても、一般には\(\widetilde{B}\)は満たさないことに注意する。
+\section{先行研究}
+ブロック\(B\)は不足群\(D\)が\cref{defect prop 2021-07-01 15:26:27}. \cref{trivial defect 2021-07-01 15:34:41}. \cref{cyclic defect 2021-07-01 15:34:52}. \cref{Erd defect 2021-07-01 15:35:07}の条件を満たしているとき、ある程度扱いやすいクラスの多元環となる。そして、Brauer tree多元環、Brauer graph多元環に対する\(\tau\)傾理論には複数の先行研究がある。加えて、誘導関手を用いることで\(B\)の\(\tau\)傾理論を\(B\)を被覆するブロック\(\widetilde{B}\)上の\(\tau\)傾理論に持ち上げる結果が得られている。
+\subsection{Brauer tree多元環上の台\texorpdfstring{\(\tau\)}{τ}傾加群}
+Brauer tree多元環は重複度と呼ばれる自然数が割り当てられた例外頂点を１つ持つような平面に埋め込まれたtreeであるBrauer treeによって定義される多元環である。Brauer tree多元環は有限群のブロックとして自然に現れるのみならず、Brauer treeを用いた有限幾何学的な考察が可能な有限表現型の多元環である。Brauer tree多元環上の\(\tau\)傾理論に関しての研究として代表的なものを以下に挙げる。
+\begin{itemize}
+  \item Star型のBrauer tree多元環に対して、その上の台\(\tau\)傾加群とその変異を計算するアルゴリズムが確立されている\cite{MR3461065}。
+  \item Line型のBrauer tree多元環に対して、その上の台\(\tau\)傾加群とその変異を計算するアルゴリズムが確立されている\cite{aoki2018torsion}。
+  \item 一般の形のBrauer tree多元環に対して、その上の台\(\tau\)傾加群の個数がBrauer treeの辺の数\(e\)を用いて\(\binom{2e}{e}\)となることが示された\cite{MR4057513}。
+\end{itemize}
+\subsection{有限群のブロックとして現れる無限表現型のBrauer graph多元環上の台\texorpdfstring{\(\tau\)}{τ}傾加群}
+\cref{defect prop 2021-07-01 15:26:27}. \cref{Erd defect 2021-07-01 15:35:07}. によると、有限群のブロックが無限表現型のBrauer graph多元環となることは稀である。加えて、\cite{MR1064107}によると、有限群のブロックとして現れる無限表現型のBrauer graph多元環の型は少ない。\cite{MR3856858}にて示された多元環のイデアル剰余による還元定理を用いることで、上述の全ての型のBrauer Graph多元環上の台\(\tau\)傾加群とその\(\tau\)傾変異が計算された。
+\subsection{\texorpdfstring{\(\tau\)}{τ}傾加群と誘導関手}
+\cite{MR3856858}にて示された多元環のイデアル剰余による還元定理の系として、以下の命題が示された。
+\begin{proposition}\label{EJR cor 2021-07-04 06:08:56}
+  有限群\(G\)から定まる群多元環\(kG\)のブロックを\(B\)とし、有限\(p\)群\(P\)をとる。このとき、\(\widetilde{B}:=B\otimes_kkP\)は群多元環\(kG\otimes_k kP\cong k[G\times P]\)のブロックであり、\(\stautilt B\)と \(\stautilt \widetilde{B}\)の間には\(\tau\)傾変異を保つ全単射が存在する。
+\end{proposition}
+筆者は東京理科大学の小境雄太氏との共同研究を経て\cref{EJR cor 2021-07-04 06:08:56}における群\(G\)と\(p\)群の直積と言う状況を特別な場合として含み、なおかつ有限群の表現論的な視座からの考察が行えるような状況を考えることで、以下の定理が得られた。
+\begin{theorem}[{\cite{MR4243358}}]
+  群\(G\)を正規部分群として含む有限群\(\widetilde{G}\)をとる。
+  \(\widetilde{G}\)における\(G\)の指数\(|\widetilde{G}:G|\)が\(p\)冪であるとき、巡回的不足群を持つ群多元環\(kG\)のブロック\(B\)と、\(B\)を被覆する\(k\widetilde{G}\)のブロック\(\widetilde{B}\)に対して、
+  \(\tau\)傾変異と整合的であるような全単射
+  \begin{equation}\label{KK1 main 2021-07-04 06:19:11}
+    \begin{tikzcd}\label{KK1 main corr}
+      \stautilt B\ar[r]&\stautilt \widetilde{B}
+    \end{tikzcd}
+  \end{equation}
+  が誘導関手\(\induc_G^{\widetilde{G}}\)から明示的に得られる。
+\end{theorem}
+
+\section{主結果}
+\cref{KK1 main 2021-07-04 06:19:11}の証明は\(B\)の不足群が巡回的である点と指数\(|\widetilde{G}:G|\)が\(p\)冪であると言う点に大きく依存していた。以下に述べる主結果はこれらの条件を緩和しつつ、半煉瓦の対応も与えるような精密化となっている。主結果を述べる前に、煉瓦、半煉瓦の作用の拡張について解説する。
+\subsection{半煉瓦と作用の拡張}
+\(kG\)加群\(U\)に対して、\(k\widetilde{G}\)加群\(\widetilde{U}\)が\(U\)の作用の拡張であるとは、\(\restr_G^{\widetilde{G}} \widetilde{U} \cong U\)が成り立つことをいう。
+有限群の表現論において、「正規部分群上の既約加群がどのように上の群に持ち上がるのか」について、今日ではClifford理論として知られる研究の帰結としてさまざまな結果が知られていた\cite{MR269750}。
+単純加群の一般化である煉瓦についても類似した結果が得られるのではないかと考察した結果、以下の主張が得られた。
+\begin{proposition}\label{brick extension 2021-07-04 06:43:21}
+  自明係数\(k^\times\)上の剰余群\(\widetilde{G}/G\)に対する２次の群のコホモロジー\(H^2(\widetilde{G}/G,k^\times)\)が消滅しているとする。このとき、
+  \(kG\)上の煉瓦\(S\)が\(\widetilde{G}\)不変である（すなわち、任意の\(\widetilde{g}\in \widetilde{G}\)に対して、\(kG\)加群としての同型\(\widetilde{g}S\cong S\)が成り立つ）ならば、煉瓦\(S\)は\(k\widetilde{G}\)上の煉瓦に拡張可能である。加えて、\(S\)の拡張の同型類の個数は群多元環\(k\widetilde{G}/G\)上の単純加群の同型類の個数に一致する。
+\end{proposition}
+\subsection{主結果とその系}
+以下が本稿における主結果である。
+\begin{theorem}\label{KK2 main 2021-07-04 07:20:14}
+  群\(G\)を正規部分群として含む有限群\(\widetilde{G}\)をとる。\(kG\)のブロック\(B\)と\(B\)を被覆する\(k\widetilde{G}\)のブロック\(\widetilde{B}\)に対して、以下の条件を仮定する。
+  \begin{itemize}
+    \item \(B\)上の任意の煉瓦が\(\widetilde{G}\)不変である。
+    \item 群のコホモロジー\(H^2(\widetilde{G)/G,k^\times}\)が消滅している。
+  \end{itemize}
+  このとき、\(\tau\)傾変異と整合的であるような単射
+  \begin{equation}\label{KK2 stau 2021-07-04 07:08:06}
+    \begin{tikzcd}
+      \stautilt B\ar[r]&\stautilt \widetilde{B}
+    \end{tikzcd}
+  \end{equation}
+  が\(B\)加群の誘導の\(\widetilde{B}\)成分をとる関手\(\widetilde{B}\induc_G^{\widetilde{G}}\)から明示的に得られる。加えて、\(B\)上の半煉瓦の各直和因子を成す煉瓦の作用の拡張を用いることで
+  \begin{equation}\label{KK2 sbrick 2021-07-04 07:08:17}
+    \begin{tikzcd}
+      \sbrick B\ar[r]&\sbrick \widetilde{B}
+    \end{tikzcd}
+  \end{equation}
+  が得られ、以下の図式を可換とする。
+  \begin{equation}
+    \begin{tikzcd}
+      \stautilt \widetilde{B}\ar[r,"\text{\cref{asai corr 2021-06-30 19:20:26} on \(\widetilde{B}\)}"]&\sbrick \widetilde{B}\\
+      \stautilt B\ar[u,"\cref{KK2 stau 2021-07-04 07:08:06}"]\ar[r,"\text{\cref{asai corr 2021-06-30 19:20:26} on \(B\)}"']&\sbrick B\ar[u,"\cref{KK2 sbrick 2021-07-04 07:08:17}"']
+    \end{tikzcd}
+  \end{equation}
+\end{theorem}
+主結果における仮定である煉瓦の\(\widetilde{G}\)普遍性はブロック\(B\)が巡回不足群を持つ状況であれば無条件で成立する。また、有限体\(\mathbb{Z}/p\mathbb{Z}\)係数の特殊線形群\(\mathrm{SL}(2,\mathbb{Z}/p\mathbb{Z})\)等の、単純群の次元が全て異なるような状況下においても成立する。2次の群のコホモロジー\(H^2(\widetilde{G)/G,k^\times}\)が消滅するための十分条件として、\(\widetilde{G}/G\)が\(p\)群である場合や\(p\)-primeな巡回群である場合が知られている。そのため、\cref{KK2 main 2021-07-04 07:20:14}は\cref{KK1 main 2021-07-04 06:19:11}をより精密にした以下の結果を導くのみならず、より一般的な状況でも適応可能である。
+\cref{KK1 main 2021-07-04 06:19:11}の精密化と\cref{cover prop 2021-07-01 15:26:44}. \cref{p cover 2021-07-04 07:28:55}. を用いて、全てのブロックに対する考察を統合することで、群環上の台\(\tau\)傾加群と半煉瓦に対する以下の系を得る。
+\begin{corollary}
+  巡回的シロー\(p\)部分群を持つ群\(G\)を正規部分群として含む有限群\(\widetilde{G}\)に対して、以下の図式が可換となる。
+  \begin{equation}
+    \begin{tikzcd}
+      \stautilt k\widetilde{G}\ar[r,"\text{\cref{asai corr 2021-06-30 19:20:26} on \(k\widetilde{G}\)}"]&\sbrick k\widetilde{G}\\
+      \stautilt kG\ar[u,"\cref{KK1 main corr}"]\ar[r,"\text{\cref{asai corr 2021-06-30 19:20:26} on \(kG\)}"']&\sbrick B\ar[u,"\cref{KK2 sbrick 2021-07-04 07:08:17}"']
+    \end{tikzcd}
+  \end{equation}
+\end{corollary}
+% \subsection{証明の概略}
+% \subsection{具体例}
+
+% 素数は多くの人々を魅了してきた．古くから素数が無限個存在することは知られていたが，その分布については
+% いまだわかっていないことが多い．
+% 次の\emph{Riemannゼータ函数}
+% \begin{equation}\label{zeta}
+%   \zeta(s)  =  \sum_{n = 1}^\infty \frac{1}{n^s}
+% \end{equation}
+
+% を考える．これは$1$を除く複素全平面に有理型に解析接続される．
+% asaaa愛妻ファさい。\ref{zeta}
+
+% 参考文献の例
+% \begin{thebibliography}{99}
+%   \bibitem[R]{R}
+%   {Riemann, B.},
+%   {\em \"Uber die Anzahl der Primzahlen unter einer gegebenen Gr\"o\ss{}e},
+%   {Monatsberichte der K\"oniglich Preu\ss{}ischen Akadademie der Wissenschaften zu Berlin},
+%   (1859), 671--680.
+% \end{thebibliography}
+\bibliographystyle{alphaurlc}
+% \bibliographystyle{alpha}
+\bibliography{KoshioCite.bib}
+\end{document}

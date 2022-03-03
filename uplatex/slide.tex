@@ -1,0 +1,413 @@
+\RequirePackage{etex,plautopatch}
+\documentclass[dvipdfmx,10pt,handout
+]{beamer}
+% --------------------------------------------------------
+%枠の設定
+% --------------------------------------------------------
+% \usetheme{Antibes}
+% \usetheme{Bergen}
+% \usetheme{Berkeley}
+% \usetheme{Berlin}
+% \usetheme{Copenhagen}
+% \usetheme{CambridgeUS}
+% \usetheme{Darmstadt}
+% \usetheme{Dresden}
+\usetheme{Frankfurt}
+% \usetheme{Goettingen}
+% \usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+% \usetheme{Madrid}
+% \usetheme{Malmoe}
+%\usetheme{Marburg}
+% \usetheme{Montpellier}
+%\usetheme{PaloAlto}
+%\usetheme{Pittsburgh}
+% \usetheme{Rochester}
+%usetheme{Singapore}    
+%\usetheme{Szeged}     
+%\usetheme{Warsaw}
+% \usetheme{boxes}
+% \usetheme{default}
+
+% --------------------------------------------------------
+% パッケージ
+% --------------------------------------------------------
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{positioning,%相対配置
+arrows,%矢印の修飾
+cd,%可換図式
+shapes.arrows%arrowbox
+}
+% \usepackage[style=alphabetic,giveninits=true,isbn=false,url=false]{biblatex}
+\usepackage{cleveref}
+\usepackage[square,numbers]{natbib}
+\usepackage{autonum}
+
+% \usepackage[authoryear]{natbib}
+% --------------------------------------------------------
+% コマンド
+% --------------------------------------------------------
+
+\newcommand{\lmod}{\operatorname{\mathsf{\hspace{-2pt}-mod}}}
+\newcommand{\lMod}{\operatorname{\mathsf{\hspace{-2pt}-Mod}}}
+\newcommand{\lproj}{\operatorname{\mathsf{\hspace{-2pt}-proj}}}
+\newcommand{\linj}{\operatorname{\mathsf{\hspace{-2pt}-inj}}}
+\newcommand{\thick}{\operatorname{\mathsf{thick}}}
+\newcommand{\silt}{\operatorname{\mathsf{silt}}}
+\newcommand{\tilt}{\operatorname{\mathsf{tilt}}}
+\newcommand{\op}{\operatorname{\mathrm{op}}}
+\newcommand{\twosilt}{\operatorname{\mathsf{2-silt}}}
+\newcommand{\twotilt}{\operatorname{\mathsf{2-tilt}}}
+
+
+\newcommand{\Image}{\operatorname{\mathrm{Im}}}
+% \newcommand{\ker}{\operatorname{\mathrm{Im}}}
+\newcommand{\Soc}{{\operatorname{Soc}\nolimits}}
+\newcommand{\Rad}{{\operatorname{Rad}\nolimits}}
+\newcommand{\Ext}{\operatorname{Ext}\nolimits}
+\newcommand{\End}{\operatorname{End}\nolimits}
+\newcommand{\Hom}{\operatorname{Hom}\nolimits}
+\newcommand{\induc}{{\operatorname{Ind}\nolimits}}
+\newcommand{\restr}{{\operatorname{Res}\nolimits}}
+\newcommand{\add}{\operatorname{\mathsf{add}}}
+\newcommand{\tautilt}{\operatorname{\mathsf{\tau-tilt}}}
+\newcommand{\stautilt}{\operatorname{\mathsf{s\tau-tilt}}}
+\newcommand{\stauitilt}{\operatorname{\mathsf{s\tau^{-1}-tilt}}}
+
+
+\newcommand{\tors}{\operatorname{\mathsf{tors}}}
+\newcommand{\torf}{\operatorname{\mathsf{torf}}}
+\newcommand{\ftors}{\operatorname{\mathsf{f-tors}}}
+\newcommand{\ftorf}{\operatorname{\mathsf{f-torf}}}
+\newcommand{\Fac}{\operatorname{\mathsf{Fac}}}
+\newcommand{\Sub}{\operatorname{\mathsf{Sub}}}
+\newcommand{\Filt}{\operatorname{\mathsf{Filt}}}
+\newcommand{\brick}{\operatorname{\mathsf{brick}}}
+\newcommand{\sbrick}{\operatorname{\mathsf{sbrick}}}
+\newcommand{\flsbrick}{\operatorname{\mathsf{f_L-sbrick}}}
+\newcommand{\frsbrick}{\operatorname{\mathsf{f_R-sbrick}}}
+\newcommand{\smc}{\operatorname{\mathsf{smc}}}
+\newcommand{\twosmc}{\operatorname{\mathsf{2-smc}}}
+
+\newcommand{\torscl}{\mathsf{T}}
+\newcommand{\torfcl}{\mathsf{F}}
+
+\newcommand{\til}[1]{\widetilde{#1}}
+
+\newcommand{\inertiagp}{I}
+\newcommand{\decompgp}{I}
+\newcommand{\cfn}{\operatorname{\mathrm{s}}}
+
+% --------------------------------------------------------
+% タイトル
+% --------------------------------------------------------
+\title{群環上の台τ傾加群の誘導加群について}
+\author[小塩~遼太郎,小境~雄太]{\textbf{小塩~遼太郎（東京理科大）}, 小境~雄太（東京理科大）}
+% \institute[東京理科大学]{東京理科大学理学研究科数学専攻%　㓛刀研究室
+% }
+\date[\today]{\today}
+
+% --------------------------------------------------------
+% スライド
+% --------------------------------------------------------
+\begin{document}
+\begin{frame}\frametitle{}
+    \titlepage
+\end{frame}
+
+\begin{frame}\frametitle{動機}
+    \begin{itemize}
+        \item \(k:\) 標数\(p>0\)の代数閉体
+        \item \(G:\) 有限群
+        \item \(kG:\) \(k\)上の\(G\)群環
+              \pause
+        \item \(kG=\cdots \times B \times \cdots :\) \(k\)多元環としての直既約直積分解
+        \item \(B:\) \(kG\)のブロック
+    \end{itemize}
+    % kGの上記の分解に伴って、加群圏や導来圏なども直積分解される。ブロック\(B\)の導来同値について調べたい。
+    \pause
+    \begin{block}{導来圏における森田理論\cite{MR1002456}}
+        ブロック\(B\)の導来同値に関する問題は、\(B\)上の適切な\alert<1>{傾複体}(Tilting complex) \(T\in K^b(B\lproj)\subset D^b(B\lmod)\)を見つける問題と同値である。
+    \end{block}
+    \pause
+    \begin{itemize}
+        \item \(\tilt B:=\left\{ T:\text{\(B\)上の傾複体}\right\}/\sim\)
+              \pause
+              \begin{itemize}
+                  \item[] (\(T\sim T':\Leftrightarrow\) \(\add T= \add T'\))
+              \end{itemize}
+    \end{itemize}
+    \pause
+    \begin{block}{\(\tilt B\)の半順序構造(\cite{MR2927802})}
+        \(\tilt B\)には傾変異と深い関わりがある半順序構造が定義される。
+    \end{block}
+    % \(B\)上の傾複体について、その全体の集合を記述したり、傾複体たちの順序構造について調べたい
+\end{frame}
+\begin{frame}
+    \frametitle{二項傾複体}
+    \begin{exampleblock}{自明な傾複体}
+        \[\begin{tikzcd}[ampersand replacement=\&]
+                (\cdots\ar[r]\& 0\ar[r] \& B\ar[r]\&0\ar[r]\& \cdots)\in \tilt B
+            \end{tikzcd}\]
+    \end{exampleblock}
+    \pause
+    \begin{block}{二項傾複体}
+        \[\begin{tikzcd}[ampersand replacement=\&]
+                (\cdots\ar[r]\& 0\ar[r] \& T^{-1}\ar[r]\&T^0\ar[r]\&0\ar[r]\&\ \cdots)\in \tilt B
+            \end{tikzcd}\]
+    \end{block}
+    \pause
+    \begin{itemize}
+        \item\(\twotilt B:=\left\{ \text{\(T:\) 二項傾複体} \right\}/\sim\)
+    \end{itemize}
+    \pause
+    \begin{exampleblock}{二項傾複体に関する議論}
+        \begin{itemize}
+            \item \(\left\{ \text{\(P
+                      _I:\) Okuyama--Rickard 傾複体} \right\}\subset \twotilt B\) \cite{okuyama1997some}
+            \item \(\begin{tikzcd}[ampersand replacement=\&]
+                      \hspace{-4pt}%ちょっと気に食わないけど無理矢理調節
+                      \twotilt B \ni T\ar[r,leftrightarrow,"\text{傾変異}"] \& T'\in \tilt B
+                  \end{tikzcd}\)
+            \item \(\twotilt B \cong  \stautilt B:=(\left\{ \text{\(U:\) \(B\)上の台τ傾加群} \right\}/\sim)\)
+        \end{itemize}
+    \end{exampleblock}
+\end{frame}
+\begin{frame}
+    \frametitle{傾加群の一般化}
+    % 傾加群が導来同値を与えることがHappelによって示され、
+    傾複体は傾加群の導来圏における一般化として\cite{MR1002456}において導入された。
+    \pause
+    \begin{alertblock}{遺伝的多元環上の傾加群}
+        % 有限次元の遺伝的\(k\)多元環\(A\)上の傾加群\(U\)は導来圏の中で二項傾複体
+        \begin{itemize}
+            \item \(\Lambda:\) 遺伝的\(k\)多元環
+            \item \(U:\) \(\Lambda\)上の傾加群\pause
+            \item \(\begin{tikzcd}[ampersand replacement=\&]\
+                      \hspace{-4pt}%ちょっと気に食わないけど無理矢理調節
+                      P_1\ar[r] \& P_0\ar[r]\&U\ar[r]\&0
+                  \end{tikzcd}:\) \(U\)の極小射影分解
+        \end{itemize}\pause
+        \[
+            \begin{tikzcd}[ampersand replacement=\&]
+                \twotilt \Lambda \ni (P_1\ar[r] \& P_0)
+            \end{tikzcd}\cong U \quad \text{(in \(D^b(\Lambda\lmod)\))}
+        \]        \end{alertblock}
+    % 遺伝的多元環においては、傾複体に関する議論が全て加群圏の中に落ちる。
+    %         \begin{center}
+    %             \begin{tikzpicture}
+    % %                 \node [arrow box, 
+    % %   arrow box shaft width=0.125cm, 
+    % %   inner sep=0.125cm/2, % should be half shaft width
+    % %   fill=gray, 
+    % %   arrow box arrows={north:0.5cm, south:0.5cm}]
+    % %   {};
+    %                 \node [arrow box, 
+    %   arrow box shaft width=0.25cm, 
+    %   inner sep=0.25cm/2, % should be half shaft width
+    %   fill=gray, 
+    %   arrow box arrows={south:0.5cm}]
+    %   at (0,0){};
+    % % \node at (-2,0){\cite{MR3187626}};
+    % % \node [arrow box, 
+    % %   arrow box shaft width=0.125cm, 
+    % %   inner sep=0.125cm/2, % should be half shaft width
+    % %   fill=gray, 
+    % %   arrow box arrows={north:0.5cm, east:0.5cm}]
+    % %   at (1,0) {};
+    %             \end{tikzpicture}
+    %         \end{center}
+    \pause
+    \begin{block}{τ傾加群と二項傾複体(\cite*{MR3187626})}
+        \begin{itemize}
+            \item \(B:\) 対称多元環
+            \item \(U:\) \(B\)上のτ傾加群
+            \item \(\begin{tikzcd}[ampersand replacement=\&]
+                      \hspace{-4pt}%ちょっと気に食わないけど無理矢理調節
+                      P_1\ar[r] \& P_0\ar[r]\&U\ar[r]\&0
+                  \end{tikzcd}:\) \(U\)の極小射影表現
+        \end{itemize}
+        \[
+            \begin{tikzcd}[ampersand replacement=\&]
+                \twotilt B \ni (P_1\ar[r] \& P_0)
+            \end{tikzcd}\]
+    \end{block}
+    % 二項傾複体と導来圏の中で同型というわけではないが、対応するような加群として傾加群を一般化したものが\citet*{MR3187626}において導入されたτ傾加群である（と言える）。
+
+\end{frame}
+
+\begin{frame}\frametitle[τ傾加群]{τ傾加群と台τ傾加群}
+    加群\(=\)有限生成左加群\pause
+    \begin{itemize}
+        \item \(B:\) 体\(k\)上有限次元な対称多元環
+        \item \(U:\) \(B\)加群
+        \item \(\tau U ( =\Omega \Omega U):\) \(U\)のAuslander--Reiten 移動
+              \begin{itemize}
+                  \item[] (\(\begin{tikzcd}[ampersand replacement=\&]
+                          0\ar[r]\&\Omega U\ar[r] \& P U\ar[r] \& U\ar[r]\&0
+                      \end{tikzcd}:\) exact)
+              \end{itemize}\pause
+        \item \(|U|:=\#(\left\{ \text{\(U\)の直既約直和因子} \right\}/\cong_{\text{iso}})\)
+        \item \(\cfn(U):=\#(\left\{ \text{\(U\)の組成因子} \right\}/\cong_{\text{iso}})\)
+    \end{itemize}
+    \pause
+    \begin{block}{τ傾加群と台τ傾加群の定義\cite{MR3187626}}
+        \begin{enumerate}
+            \item \(U:\) τリジッド(\(\tau\)-rigid)\(:\Leftrightarrow\) \(\Hom_B(U,\tau U)=0\)
+            \item \(U:\) τ傾加群(\(\tau-tilting module\))\(:\Leftrightarrow\) \(U:\) τリジッド \(\&\) \(|U|=|{}_B B|(=\cfn({}_B B))\)
+            \item \(U:\) 台τ傾加群(support \(\tau\)-tilting module)\(:\Leftrightarrow\) \(U:\) τリジッド \(\&\) \(|U|=\cfn(U)\)
+        \end{enumerate}
+    \end{block}
+    % 傾加群の一般化は\cite{MR3187626}以前より研究がなされていたが、それらは大域次元が有限であることに依存したものであったため、大域次元が無限となるようなブロックなどの多元環に対しては非自明な議論を導くことができなかった。（導来圏の中で同型になるという項目に拘泥した？）\\
+    % τ傾加群やそれを少しだけ一般化した台τ傾加群をブロックの上で分類することはブロック上の二項傾複体の分類と同じである。それを加群圏の中で行える。\\
+    % しかし、これだけだとただ持ち込んだだけである。τ傾加群の群論的な意味は全くもって不明となってしまう。
+    % \\
+    % なんらかの群論的な、仮定の元でブロック上のτ傾加群について議論することで群論的な何かを見出したい。
+\end{frame}
+\begin{frame}\frametitle[τ傾加群]{τ傾加群と基本的な性質について}
+    \begin{itemize}
+        \item  \(\tautilt B:=\left\{ \text{\(U:\) \(B\)上のτ傾加群} \right\}/\sim\)
+              \item\(\stautilt B:=\left\{ \text{\(U:\) \(B\)上の台τ傾加群} \right\}/\sim\)
+              \begin{itemize}
+                  \item[] (\(U\sim U'\) \(:\Leftrightarrow\) \(\add U=\add U'\))
+              \end{itemize}\pause
+    \end{itemize}
+    \begin{block}{台τ傾加群の半順序構造\cite{MR3187626}}
+        \vspace{-10pt}
+        \[U \geq V:\Leftrightarrow
+            \begin{tikzcd}[ampersand replacement=\&]
+                U^{\oplus {}^\exists r}\ar[r,"{}^{\exists} \varphi"]\& V\ar[r]\&0:\text{ exact}
+            \end{tikzcd}
+            \quad (\text{\(U,V\in \stautilt \Lambda\)})\]
+    \end{block}
+    \pause
+    \begin{exampleblock}
+        {自明な例}
+        \begin{itemize}
+            \item \alt<3>{\(\tautilt B \subset \stautilt B\)}{\({}_B B\in \tautilt B \subset \stautilt B \: \& \: \max \stautilt = {}_B B\)}\pause
+                  % \item \(0 \in \stautilt B \: \& \:  \min \stautilt = 0\)\pause
+            \item \(|{}_B B|=1\Rightarrow \stautilt B=\left\{ 0,{}_B B \right\}\)
+        \end{itemize}
+        \pause
+    \end{exampleblock}
+    \begin{block}{二項傾複体との対応\citet{MR3187626}}
+
+        \[
+            \begin{tikzcd}[ampersand replacement=\&]
+                \tautilt B \ar[r,sloped,"\sim"]\& \twotilt B
+                % \alt<6>{}{\stautilt B\ar[ru,sloped,"\sim"']}\&
+            \end{tikzcd}:\text{as posets}
+        \]
+    \end{block}\pause
+\end{frame}
+
+\begin{frame}{ブロック上の台τ傾加群に関する先行研究}
+    \begin{itemize}
+        \item \(k:\) 標数\(p\)の代数閉体
+        \item \(G:\) 有限群 \pause\alert<5>{with 巡回的シロー\(p\)部分群}\pause
+        \item \(kG=\cdots \times B \times \cdots\)
+        \item \(B:\) \(kG\)のブロック
+    \end{itemize}
+    \pause
+    \begin{alertblock}{Remark}
+        \begin{itemize}
+            \item \(\stautilt kG=\cdots \times \stautilt B \times \cdots\)\pause
+            \item \alert<5>{\(B\) は単純多元環 or Brauer tree 多元環}
+        \end{itemize}
+    \end{alertblock}
+    \pause
+    \begin{block}
+        {Brauer tree 多元環上の台τ傾加群に関する先行研究}
+        % Brauer tree 多元環上の台τ傾加群に関しては\cite{MR3461065}, \cite{aoki2018torsion}, \cite{ASASHIBA2020119}などの先行研究がある.
+        \begin{itemize}
+            \item star型とline型のBrauer tree多元環\(B\)に対して、\(\stautilt B\) は順序構造も含めて決定されている（\cite{MR3461065}, \cite{aoki2019classifying}）。\pause
+            \item 一般のBrauer tree多元環\(B\)に対して、\(\#\stautilt B=\binom{2|B|}{|B|}\) が成り立つ（\cite{ASASHIBA2020119}）。
+        \end{itemize}
+    \end{block}
+\end{frame}
+\begin{frame}{先行研究}
+    % 自明な場合と直積の場合とを紹介する
+    \begin{block}
+        {\(p\) 群との直積の場合\cite{MR3856858}}
+        \begin{itemize}
+            \item $B:$ $kG$のブロック
+            \item $P:$ 有限$p$群
+            \item \(\widetilde{G}:=G\times P\)
+            \item ${\widetilde B}:=B\otimes _k kP:$ $k\widetilde{G}$のブロック
+        \end{itemize}
+        \hspace{10pt}$\stautilt B\cong \stautilt {\widetilde B}:$ as posets
+    \end{block}
+    \begin{alertblock}{}
+        ( 何らかの『有限群のモジュラー表現論的な仮定』) \\
+        $\Rightarrow$ 群環のブロック上の台τ傾加群に関する考察が%、より小さい位数を持ち考えやすい
+        部分群の群環のブロックに関する考察に帰着される？
+    \end{alertblock}
+    \pause
+    \begin{itemize}
+        \item \(B:\) \(kG\)のブロック
+        \item $\widetilde{G}:$ \(G\)を正規部分群として含む有限群\(\&\) \(\widetilde{G}/G:\) \(p\)群
+              % \item $\inertiagp_{\widetilde{G}}(B):=\{x\in {\widetilde{G}} \mid xBx^{-1}=B \}:$ $B$の$\widetilde{G}$における惰性群
+        \item ${\widetilde B}:$ $B$を被覆する $k\hspace{-0.3pt}\widetilde{G}$ のブロック ($:\Leftrightarrow$  $1_{\widetilde B}{\cdot} 1_{B}\neq 0$)
+    \end{itemize}
+\end{frame}
+\begin{frame}
+    {主結果と系}
+    \begin{block}{K--Kozakai}
+        \begin{itemize}
+            \item \(G:\) 有限群 with 巡回的シロー\(p\)部分群
+            \item $\widetilde{G}:$ \(G\)を正規部分群として含む有限群\(\&\) \(\widetilde{G}/G:\) \(p\)群
+            \item \(B:\) \(kG\)のブロック
+                  % \item $\inertiagp_{\widetilde{G}}(B):=\{x\in {\widetilde{G}} \mid xBx^{-1}=B \}:$ $B$の$\widetilde{G}$における惰性群
+            \item ${\widetilde B}:$ $B$を被覆する $k\hspace{-0.3pt}\widetilde{G}$ のブロック% ($:\Leftrightarrow$  $1_{\widetilde B}{\cdot} 1_{B}\neq 0$)
+        \end{itemize}\pause
+        半順序集合としての同型$\stautilt B \cong \stautilt {\widetilde B}$が誘導関手 \[\induc_G^{\widetilde G}:=k\hspace{-0.3pt}{\widetilde G}\otimes_{kG}-\colon B\lmod\rightarrow \widetilde{B}\lmod\]により導かれる.
+    \end{block}
+    \pause
+    \begin{block}
+        {系1}\vspace{-5pt}
+        \[
+            \begin{tikzcd}[ampersand replacement=\&]
+                \stautilt {\widetilde B}\ar[r,"\sim"]\ar[rd,phantom,"\circlearrowleft"]\&\twotilt {\widetilde B}\\
+                \stautilt B \ar[r,"\sim"'] \ar[u,"\induc_G^{\widetilde{G}}","\wr "']\&\twotilt {B}\ar[u,"\wr","\induc_G^{\widetilde{G}}"']
+            \end{tikzcd}:\text{as posets}
+            % \xymatrix{
+            %     \stautilt {\widetilde B}\ar[r]&\sbrick {\widetilde B}\\
+            %     \stautilt B \ar[r] \ar[u]&\sbrick B\ar[u]
+            % }
+        \]
+    \end{block}
+
+\end{frame}
+\begin{frame}
+    {系}
+    \begin{itemize}
+        \item \(kG=\cdots \times B \times \cdots\)
+        \item \(k\widetilde{G}=\cdots \times \widetilde{B} \times \cdots\)
+        \item \(\stautilt kG=\cdots \times \stautilt B \times \cdots\)
+    \end{itemize}
+    \pause
+    \begin{block}
+        {系2}
+        \[
+            \begin{tikzcd}[ampersand replacement=\&]
+                \stautilt k{\widetilde G}\ar[r,"\sim"]\ar[rd,phantom,"\circlearrowleft"]\&\twotilt k{\widetilde G}\\
+                \stautilt kG \ar[r,"\sim"'] \ar[u,"\induc_G^{\widetilde{G}}","\wr "']\&\twotilt k{G}\ar[u,"\wr","\induc_G^{\widetilde{G}}"']
+            \end{tikzcd}:\text{as posets}
+        \]
+    \end{block}
+    \pause
+    \begin{block}
+        {系3}
+        \[\#\stautilt k\widetilde{G}=\#\stautilt kG=\prod_{\text{\(B:\) \(kG\)のブロック}}\binom{2|B|}{|B|}\]
+    \end{block}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{参考文献}
+    \bibliographystyle{abbrvnat}
+    \bibliography{KoshioCite}
+\end{frame}
+
+\end{document}
