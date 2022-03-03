@@ -1,0 +1,165 @@
+%%
+%% サンプルファイル
+%%
+\RequirePackage{etex,plautopatch}
+\documentclass[dvipdfmx]{msjproc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{tikz}
+\usetikzlibrary{arrows,cd}
+% \usepackage{mathtools}
+\usepackage[hypertexnames=false]{hyperref}
+\hypersetup{
+	colorlinks=true,
+	citecolor=black,
+	linkcolor=black,
+	urlcolor=black
+	}
+\usepackage{cleveref}
+\usepackage[square,numbers]{natbib}
+\usepackage{autonum}
+\newcommand{\setmid}{\; \middle|\;}
+\newcommand{\induc}{{\operatorname{Ind}\nolimits}}
+\newcommand{\restr}{{\operatorname{Res}\nolimits}}
+\newcommand{\add}{\operatorname{\mathrm{add}}}
+\newcommand{\stautilt}{\operatorname{\mathrm{s\tau-tilt}}}
+\newcommand{\itaurigid}{\operatorname{\mathrm{indec.\tau-rigid}}}
+\newcommand{\itauirigid}{\operatorname{\mathrm{indec.\tau^{-1}-rigid}}}
+\newcommand{\stauitilt}{\operatorname{\mathrm{s\tau^{-1}-tilt}}}
+\newcommand{\nscf}{\operatorname{\mathrm{s}}}
+\newcommand{\twotilt}{\operatorname{\mathrm{2-tilt}}}
+
+
+\newcommand{\tors}{\operatorname{\mathrm{tors}}}
+\newcommand{\torf}{\operatorname{\mathrm{torf}}}
+\newcommand{\ftors}{\operatorname{\mathrm{f-tors}}}
+\newcommand{\ftorf}{\operatorname{\mathrm{f-torf}}}
+\newcommand{\Fac}{\operatorname{\mathrm{Fac}}}
+\newcommand{\Sub}{\operatorname{\mathrm{Sub}}}
+\newcommand{\Filt}{\operatorname{\mathrm{Filt}}}
+\newcommand{\brick}{\operatorname{\mathrm{brick}}}
+\newcommand{\sbrick}{\operatorname{\mathrm{sbrick}}}
+\newcommand{\flsbrick}{\operatorname{\mathrm{f_L-sbrick}}}
+\newcommand{\flbrick}{\operatorname{\mathrm{f_L-brick}}}
+\newcommand{\frsbrick}{\operatorname{\mathrm{f_R-sbrick}}}
+\newcommand{\frbrick}{\operatorname{\mathrm{f_R-brick}}}
+\newcommand{\smc}{\operatorname{\mathrm{smc}}}
+\newcommand{\twosmc}{\operatorname{\mathrm{2-smc}}}
+\newcommand{\torscl}{\mathrm{T}}
+\newcommand{\torfcl}{\mathrm{F}}
+\newcommand{\inertiagp}{I}
+\theoremstyle{definition}
+
+\newtheorem{theorem}{定理}
+\crefname{theorem}{定理}{定理}
+\begin{document}
+%%%% 講演タイトル
+\title{
+	剰余群におけるSchur multiplier の消滅条件下での\\ブロック上の台\(\tau\)傾加群と半煉瓦について
+}
+% \subtitle{講演サブタイトル}
+
+% %%%% 講演者1
+% \author{学会　花子}{日本数学大学}
+% \address{〒110-0016 東京都台東区台東1-34-8　日本数学大学 大学院理学研究科}
+% \email{gakkai_hanako@mathsoc.jp}
+% \webpage{http://mathsoc.jp/~hanako/}
+
+% %%%% 講演者2
+% \author{学会　太郎}{}
+% \email{gakkai_taro@mathsoc.jp}
+
+%%%% 講演者1
+\author{\underline{小塩　遼太郎}}{東京理科大学}
+\address{〒162-8601 東京都新宿区神楽坂1-3 東京理科大学大学院理学研究科数学専攻}
+\email{1120702@ed.tus.ac.jp}
+
+%%%% 講演者2
+\author{小境　雄太}{東京理科大学}
+\address{〒162-8601 東京都新宿区神楽坂1-3 東京理科大学理学部第一部数学科}
+\email{kozakai@rs.tus.ac.jp}
+
+
+%%%% 日付
+%  \date{2012年3月26日}
+
+%%%% 謝辞、キーワード、MSCコード  
+% \thanks{本研究は科研費(課題番号:99999999)の助成を受けたものである。}
+\subjclass[2010]{20C20, 16G10.}
+\keywords{台\(\tau\)傾加群, 半煉瓦, 有限群のブロック}
+
+\maketitle
+有限群の\(p\)ブロック上の台\(\tau\)傾加群(support \(\tau\)-tilting module)は二項の傾複体(two-term tilting complex)、半煉瓦(semibrick)、二項の単純系(two-term simple-minded collection)と一対一に対応する\cite{MR3187626,MR4139031}。二項の傾複体及び二項の単純系は共にリッカードによる研究を起源とする傾複体(tilting complex)、単純系(simple-minded collection)の特別な形のものである\cite{MR1002456,MR1947972}。このことから、ブロック上の台\(\tau\)傾加群と半煉瓦を豊富に構成することはブロックの導来同値の研究に対して有用といえる。しかし、ブロック上のそれらを直接的に計算・分類することは、一般には困難である。
+
+以下、\(G\)を有限群、\(\tilde{G}\)を\(G\)を正規部分群として含む有限群、\(k\)を標数\(p>0\)の代数閉体、\(B\)を群環\(kG\)のブロック、\(\tilde{B}\)を\(k\tilde{G}\)のブロックで\(B\)を被覆するものとする。このとき、ブロック\(B\)上の台\(\tau\)傾加群や半煉瓦から、より複雑な構造をもつ\(\tilde{B}\)上のそれらを、有限群のモジュラー表現論的な手法から構築する手法について説明する。
+
+一般の有限次元対称多元環\(\Lambda\)に対して、\(\stautilt \Lambda\)で\(\Lambda\)上の基本的(basic)な台\(\tau\)傾加群の同型類の集合、\(\sbrick \Lambda\)で\(\Lambda\)上の基本的な半煉瓦の同型類の集合、\(\twotilt \Lambda\)で\(\Lambda\)上の基本的な二項傾複体の同型類の集合、\(\twosmc \Lambda\)で\(\Lambda\)上の二項単純系の集合とする。講演者らは\cite{MR3856858}の研究に触発され、\cite{MR4243358}において、誘導関手\(\induc_G^{\tilde{G}}:=k\tilde{G}\otimes_{kG}\bullet\)を用いた以下の結果を得ていた。
+\begin{theorem}\label{2021-11-18 06:55:10}
+	剰余群\(\tilde{G}/G\)が\(p\)群となり、ブロック\(B\)上の任意の加群が\(B\)の\(\tilde{G}\)における惰性群\(\inertiagp_{\tilde{G}}(B)=\left\{ \tilde{g}\in \tilde{G}\setmid \tilde{g}B\tilde{g}^{-1}=B \right\}\)の作用で不変であるとき、以下の単射が得られる。
+	\begin{equation}\label{stau corr 2021-09-07 13:51:09}
+		\begin{tikzcd}[ampersand replacement=\&,row sep=1pt]
+			\stautilt B \ar[r]\&\stautilt \tilde{B}\\
+			U\ar[r,mapsto]\&\induc_G^{\tilde{G}} U.
+		\end{tikzcd}
+	\end{equation}
+	% defined by \(\stautilt B\ni U\mapsto \tilde{B}\induc_G^{\tilde{G}} U \in \stautilt \tilde{B}\) and
+	% \begin{equation}\label{twotilt corr 2021-09-10 17:53:30}
+	% 	\begin{tikzcd}[ampersand replacement=\&,row sep=1pt]
+	% 		\twotilt B \ar[r]\&\twotilt \tilde{B}\\
+	% 		T\ar[r,mapsto]\&\induc_G^{\tilde{G}} T.
+	% 	\end{tikzcd}
+	% \end{equation}
+	% defined by \(\twotilt B\ni T\mapsto \tilde{B}\induc_G^{\tilde{G}} T \in \twotilt \tilde{B}\) 
+	さらに、\(\stautilt B\)が有限集合であるとき、上述の写像は全単射となる。
+\end{theorem}
+
+本講演では、剰余群\(\tilde{G}/G\)における\(k\)上のSchur multiplierの類の成す群\(H^2(\tilde{G}/G,k^\times)\)とブロック\(B\)上の煉瓦に注目することで得られた\cref{2021-11-18 06:55:10}の一般化である以下の定理を紹介する。
+\begin{theorem}
+	Schur multiplierの類の成す群\(H^2(\tilde{G}/G,k^\times)\)が消滅するとし、群環\(k[\tilde{G}/G]\)は基本的、\(\stautilt B\)は有限集合であるとする。さらに、ブロック\(B\)上の任意の煉瓦が\(B\)の\(\tilde{G}\)における惰性群\(\inertiagp_{\tilde{G}}(B)\)の作用で不変であるとき、以下の単射が得られる。
+	\begin{equation}\label{stau corr 2021-11-18 07:53:59}
+		\begin{tikzcd}[ampersand replacement=\&,row sep=1pt]
+			\stautilt B \ar[r]\&\stautilt \tilde{B}\\
+			U\ar[r,mapsto]\&\tilde{B}\induc_G^{\tilde{G}} U.
+		\end{tikzcd}
+	\end{equation}
+	% defined by \(\stautilt B\ni U\mapsto \tilde{B}\induc_G^{\tilde{G}} U \in \stautilt \tilde{B}\) and
+	% \begin{equation}\label{twotilt corr 2021-11-18 07:54:09}
+	% 	\begin{tikzcd}[ampersand replacement=\&,row sep=1pt]
+	% 		\twotilt B \ar[r]\&\twotilt \tilde{B}\\
+	% 		T\ar[r,mapsto]\&\tilde{B}\induc_G^{\tilde{G}} T.
+	% 	\end{tikzcd}
+	% \end{equation}
+	% defined by \(\twotilt B\ni T\mapsto \tilde{B}\induc_G^{\tilde{G}} T \in \twotilt \tilde{B}\) 
+	加えて、ブロック\(B\)上の任意の煉瓦\(S_i\)が群環\(k[\tilde{G}/G]\)上の単純加群の個数\(e\)と同じだけの\(k\tilde{G}\)加群へ拡張をもち、それらを\(S_i^{(1)}, \ldots, S_i^{(e)}\)とすると、以下の単射が得られる。
+	\begin{equation}\label{sbrick corr 2021-09-10 18:10:41}
+		\begin{tikzcd}[ampersand replacement=\&,row sep=1pt]
+			\sbrick B \ar[r]\&\sbrick \tilde{B}\\
+			S\cong \bigoplus_{i=1}^{n_{S}}S_i\ar[r,mapsto]\& \tilde{B}\left( \bigoplus_{i=1}^{n_S}\bigoplus_{j=1}^{e}\tilde{S}_i^{(j)} \right).
+		\end{tikzcd}
+	\end{equation}
+	% defined by \(S\cong \bigoplus_{i=1}^{n_{S}}S_i\mapsto \bigoplus_{i=1}^{n_S}\bigoplus_{j=1}^{e}\tilde{B}\tilde{S}_i^{(j)}\) 
+	これらの写像は以下の可換図式を与える。
+	\begin{equation}
+		\begin{tikzcd}[ampersand replacement=\&, column sep=2cm]
+			\stautilt B\ar[d,"\text{\cite{MR4139031} for \(B\)}"',"\wr"] \ar[r,"\text{\eqref{stau corr 2021-11-18 07:53:59}}"]\&\stautilt \tilde{B} \ar[d,"\text{\cite{MR4139031} for \(\tilde{B}\)}","\wr"']\\
+			\sbrick B\ar[r,"\text{\eqref{sbrick corr 2021-09-10 18:10:41}}"']\&\sbrick \tilde{B}.
+		\end{tikzcd}
+	\end{equation}
+	
+\end{theorem}
+% \bibliographystyle{abbrvnat}
+\bibliographystyle{alpha}
+\bibliography{KoshioCite}
+%%%% 参考文献
+% \begin{thebibliography}{9}
+%   \bibitem{A}
+%   文献A.
+%   \bibitem{B}
+%   文献B.
+%   \bibitem{C}
+%   文献C.
+% \end{thebibliography}
+
+%  %%%% 付録
+%  \appendix
+%  \section{付録}
+\end{document}
